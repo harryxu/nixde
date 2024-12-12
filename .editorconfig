@@ -14,7 +14,7 @@ trim_trailing_whitespace = false
 [composer.json]
 indent_size = 4
 
-[*.{css,less,scss,html,xml,yml,yaml,json,blade.php,js,jsx,nix}]
+[*.{css,less,scss,html,xml,yml,yaml,json,blade.php,js,jsx,nix,nix.example}]
 indent_size = 2
 
 [*.{html,md}]
