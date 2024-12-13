@@ -6,8 +6,8 @@
 
   # List packages installed in system profile. To search, run: $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim wget curl neovim gnumake
-    fish starship zoxide
+    vim wget curl neovim fish starship zoxide
+    gcc gnumake cmake pkg-config autoconf automake libtool
   ];
 
   # Enable Docker.
