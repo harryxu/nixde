@@ -2,9 +2,7 @@
 A simple NixOS Desktop Environment for programmers.
 
 ## Install NixOS
-This config is for NixOS Plasma Desktop. So you need to install NixOS (Plasma Desktop) first.
-
-Download NixOS from https://nixos.org/download, and chose `Download (Plasma Desktop, 64-bit Intel/AMD)`, not tested with ARM architecture.
+Download NixOS from https://nixos.org/download, not tested with ARM architecture.
 
 ## Usage
 

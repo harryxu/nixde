@@ -16,6 +16,7 @@ in
       vim wget curl neovim fish starship zoxide
       gcc gnumake cmake pkg-config autoconf automake libtool
       kitty
+      gnome-session
     ];
 
     # Enable Docker.
@@ -57,6 +58,12 @@ in
 
     # Enable RDP.
     services.xrdp.enable = true;
-    services.xrdp.defaultWindowManager = "startplasma-x11";
+    services.xrdp.defaultWindowManager = "${pkgs.gnome.gnome-session}/bin/gnome-session";
     services.xrdp.openFirewall = true;
+
+    networking.firewall = {
+      enable = true;
+      allowedTCPPorts = [ 3389 ];
+      allowedUDPPorts = [ 3389 ];
+    };
   }
