@@ -17,7 +17,7 @@ in
       vim wget curl neovim fish starship zoxide
       gcc gnumake cmake pkg-config autoconf automake libtool
       kitty
-    ]
+    ];
 
     # Enable Docker.
     virtualisation.docker.enable = true;
