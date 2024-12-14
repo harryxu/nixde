@@ -6,6 +6,7 @@ in
   {
     imports = builtins.concatLists [
       (utils.importIfExists ./modules/sys-nvidia.nix)
+      (utils.importIfExists ./modules/sys-gnome.nix)
     ];
 
     # Enable Flakes
@@ -16,8 +17,7 @@ in
       vim wget curl neovim fish starship zoxide
       gcc gnumake cmake pkg-config autoconf automake libtool
       kitty
-      gnome-session
-    ];
+    ]
 
     # Enable Docker.
     virtualisation.docker.enable = true;
@@ -56,14 +56,11 @@ in
     # Enable the OpenSSH daemon.
     services.openssh.enable = true;
 
-    # Enable RDP.
-    services.xrdp.enable = true;
-    services.xrdp.defaultWindowManager = "${pkgs.gnome-session}/bin/gnome-session";
-    services.xrdp.openFirewall = true;
-
+    # Firewall
     networking.firewall = {
       enable = true;
       allowedTCPPorts = [ 3389 ];
       allowedUDPPorts = [ 3389 ];
     };
+
   }
