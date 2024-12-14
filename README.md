@@ -10,7 +10,7 @@ Download NixOS from https://nixos.org/download, not tested with ARM architecture
 
 ```bash
 nix-shell -p git
-git clone git@github.com:harryxu/nixde.git
+git clone https://github.com/harryxu/nixde.git
 cd nixde
 ```
 
