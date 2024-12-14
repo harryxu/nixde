@@ -42,4 +42,9 @@ in
 
     # Enable the OpenSSH daemon.
     services.openssh.enable = true;
+
+    # Enable RDP.
+    services.xrdp.enable = true;
+    services.xrdp.defaultWindowManager = "startplasma-x11";
+    services.xrdp.openFirewall = true;
   }
