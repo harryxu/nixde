@@ -2,6 +2,7 @@
 {
   environment.systemPackages = with pkgs; [
     gnome-session
+    gnome-terminal
     gnome-tweaks
     gnomeExtensions.dash-to-dock
   ];
