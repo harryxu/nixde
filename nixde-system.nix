@@ -58,7 +58,7 @@ in
 
     # Enable RDP.
     services.xrdp.enable = true;
-    services.xrdp.defaultWindowManager = "${pkgs.gnome.gnome-session}/bin/gnome-session";
+    services.xrdp.defaultWindowManager = "${pkgs.gnome-session}/bin/gnome-session";
     services.xrdp.openFirewall = true;
 
     networking.firewall = {
