@@ -1,8 +1,13 @@
 { config, pkgs, ... }:
 let
   env = import ./env.nix;
+  utils = import ./utils.nix;
 in
   {
+    imports = builtins.concatLists [
+      (utils.importIfExists ./modules/sys-nvidia.nix)
+    ];
+
     # Enable Flakes
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -30,6 +35,12 @@ in
         fi
       '';
     };
+
+    # Fonts
+    fonts.packages = with pkgs; [
+      nerd-fonts.iosevka
+      nerd-fonts.ubuntu-mono
+    ];
 
 
     # Install git.

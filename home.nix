@@ -4,6 +4,10 @@
   home.stateVersion = "24.11";
   programs.home-manager.enable = true;
 
+  home.packages = with pkgs; [
+    vscode
+  ];
+
   programs.git = {
     enable = true;
     aliases = {
