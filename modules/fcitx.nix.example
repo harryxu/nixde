@@ -1,0 +1,20 @@
+{config, pkgs, ...}:
+{
+  environment.systemPackages = with pkgs; [
+    fcitx5
+    fcitx5-gtk
+    fcitx5-qt
+    fcitx5-configtool
+    fcitx5-chinese-addons
+  ];
+
+  environment.sessionVariables = {
+    GTK_IM_MODULE = "fcitx";
+    QT_IM_MODULE = "fcitx";
+    XMODIFIERS = "@im=fcitx";
+    SDL_IM_MODULE = "fcitx";
+    INPUT_METHOD = "fcitx";
+  };
+
+  services.dbus.enable = true;
+}

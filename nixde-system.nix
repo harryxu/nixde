@@ -7,6 +7,7 @@ in
     imports = builtins.concatLists [
       (utils.importIfExists ./modules/sys-nvidia.nix)
       (utils.importIfExists ./modules/sys-gnome.nix)
+      (utils.importIfExists ./modules/fcitx.nix)
     ];
 
     # Enable Flakes
