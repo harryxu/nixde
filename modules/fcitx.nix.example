@@ -1,20 +1,12 @@
 {config, pkgs, ...}:
 {
-  environment.systemPackages = with pkgs; [
-    fcitx5
-    fcitx5-gtk
-    fcitx5-qt
-    fcitx5-configtool
-    fcitx5-chinese-addons
-  ];
-
-  environment.sessionVariables = {
-    GTK_IM_MODULE = "fcitx";
-    QT_IM_MODULE = "fcitx";
-    XMODIFIERS = "@im=fcitx";
-    SDL_IM_MODULE = "fcitx";
-    INPUT_METHOD = "fcitx";
+  i18n.inputMethod = {
+    type = "fcitx5";
+    enable = true;
+    fcitx5.addons = with pkgs; [
+      fcitx5-gtk             # alternatively, kdePackages.fcitx5-qt
+      fcitx5-chinese-addons  # table input method support
+      fcitx5-nord            # a color theme
+    ];
   };
-
-  services.dbus.enable = true;
 }
