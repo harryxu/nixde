@@ -42,6 +42,11 @@ in
     fonts.packages = with pkgs; [
       nerd-fonts.iosevka
       nerd-fonts.ubuntu-mono
+
+      noto-fonts
+      noto-fonts-cjk-sans
+      wqy_zenhei
+      wqy_microhei
     ];
 
 

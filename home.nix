@@ -9,23 +9,6 @@
     google-chrome
   ];
 
-  programs.git = {
-    enable = true;
-    aliases = {
-      ci = "commit";
-      co = "checkout";
-      st = "status";
-    };
-  extraConfig = {
-      init = {
-        defaultBranch = "main";
-      };
-      core = {
-        editor = "nvim";
-      };
-    };
-  };
-
   # Setup dotfiles.
   home.activation.setupDotfiles = lib.hm.dag.entryAfter ["writeBoundary"] ''
     if [ ! -d ~/.config/.git ]; then
