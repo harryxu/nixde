@@ -8,9 +8,13 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+    };
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager }:
+  outputs = inputs @ { self, nixpkgs, home-manager, ghostty }:
     let
       env = import ./env.nix;
     in {
@@ -18,6 +22,12 @@
         system = "x86_64-linux";
         modules = [
           ./configuration.nix
+
+          ({ pkgs, ... }: {
+            environment.systemPackages = [
+              ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
+            ];
+          })
 
           ./nixde-system.nix
 
