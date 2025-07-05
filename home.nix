@@ -6,6 +6,7 @@
 
   home.packages = with pkgs; [
     vscode
+    zed-editor
     google-chrome
   ];
 
