@@ -47,8 +47,13 @@ in
       nerd-fonts.iosevka
       nerd-fonts.ubuntu-mono
 
+      font-awesome           # ttf-font-awesome
+
       noto-fonts
+      noto-fonts-emoji
+      noto-fonts-extra
       noto-fonts-cjk-sans
+
       wqy_zenhei
       wqy_microhei
     ];
