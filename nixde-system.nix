@@ -20,6 +20,10 @@ in
       kitty
     ];
 
+    programs.hyprland.enable = true;
+    services.displayManager.gdm.wayland = true;
+
+
     # Enable Docker.
     virtualisation.docker.enable = true;
 
@@ -48,7 +52,6 @@ in
       wqy_zenhei
       wqy_microhei
     ];
-
 
     # Install git.
     programs.git.enable = true;

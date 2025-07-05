@@ -1,13 +1,22 @@
 { config, pkgs, lib, ... }:
 
 {
-  home.stateVersion = "24.11";
+  home.stateVersion = "25.05";
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
     vscode
     zed-editor
     google-chrome
+
+    # hyprland packages
+    hyprland
+    waybar
+    wofi
+    dunst
+    pavucontrol
+    grim slurp
+    xdg-desktop-portal-hyprland
   ];
 
   # Setup dotfiles.
