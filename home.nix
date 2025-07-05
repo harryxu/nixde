@@ -17,6 +17,9 @@
     pavucontrol
     grim slurp
     xdg-desktop-portal-hyprland
+
+    swaybg
+    waypaper
   ];
 
   # Setup dotfiles.
