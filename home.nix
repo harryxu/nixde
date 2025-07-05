@@ -11,6 +11,7 @@
 
     # hyprland packages
     hyprland
+    hypridle
     waybar
     wofi
     dunst
