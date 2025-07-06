@@ -23,6 +23,15 @@
     waypaper
   ];
 
+  # Cursor theme
+  home.pointerCursor = {
+    name = "Adwaita";
+    size = 24;
+    package = pkgs.adwaita-icon-theme;
+    x11.enable = true;
+    gtk.enable = true;
+  };
+
   # Setup dotfiles.
   home.activation.setupDotfiles = lib.hm.dag.entryAfter ["writeBoundary"] ''
     if [ ! -d ~/.config/.git ]; then
