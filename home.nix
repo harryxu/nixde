@@ -5,22 +5,13 @@
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
-    vscode
-    zed-editor
-    google-chrome
+    vscode zed-editor google-chrome
+    blueman
 
     # hyprland packages
-    hyprland
-    hypridle
-    waybar
-    wofi
-    dunst
-    pavucontrol
-    grim slurp
-    xdg-desktop-portal-hyprland
-
-    swaybg
-    waypaper
+    hyprland hypridle hyprlock xdg-desktop-portal-hyprland
+    waybar wofi pavucontrol grim slurp swaybg waypaper
+    swaynotificationcenter
   ];
 
   # Cursor theme
