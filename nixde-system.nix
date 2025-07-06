@@ -17,6 +17,7 @@ in
     environment.systemPackages = with pkgs; [
       vim wget curl neovim fish starship zoxide
       gcc gnumake cmake pkg-config autoconf automake libtool
+      pciutils
       tmux kitty
     ];
 

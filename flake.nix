@@ -18,6 +18,7 @@
     let
       env = import ./env.nix;
     in {
+      nixpkgs.config.allowUnfree = true;
       nixosConfigurations.nixde = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
