@@ -1,2 +1,2 @@
 flakerebuild:
-	sudo nixos-rebuild switch --flake path:.#nixde
+	sudo nixos-rebuild switch --impure --flake path:.#nixde
