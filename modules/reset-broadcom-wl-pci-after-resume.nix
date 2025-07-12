@@ -33,61 +33,65 @@
 #
 # =============================================================================
 
+# /path/to/your/modules/reset-broadcom-wl-pci-after-resume.nix
+
 { config, pkgs, ... }:
 
+let
+  wifiResumeScript = pkgs.writeShellScriptBin "wifi-resume-script" ''
+    #!${pkgs.runtimeShell}
+
+    LOG_TAG="WiFi-Resume-Fix"
+    LOGGER="${pkgs.util-linux}/bin/logger -t $LOG_TAG"
+
+    $LOGGER "--- Resume script starting execution after delay ---"
+
+    LSPCI=${pkgs.pciutils}/bin/lspci
+    GREP=${pkgs.gnugrep}/bin/grep
+    AWK=${pkgs.gawk}/bin/awk
+    SYSTEMCTL=${pkgs.systemd}/bin/systemctl
+
+    WIFI_DRIVER="brcmfmac"
+
+    $LOGGER "Finding PCI ID..."
+    WIFI_PCI_ID=$($LSPCI -D | $GREP "Network controller.*Broadcom" | $AWK '{print $1}')
+
+    if [ -z "''${WIFI_PCI_ID}" ]; then
+      $LOGGER "FATAL: Could not find Broadcom WiFi PCI ID. Aborting."
+      exit 1
+    fi
+
+    $LOGGER "Found device at ''${WIFI_PCI_ID}. Proceeding with reset."
+
+    $LOGGER "Step 1/3: Unbinding device..."
+    echo "''${WIFI_PCI_ID}" > "/sys/bus/pci/drivers/''${WIFI_DRIVER}/unbind" || $LOGGER "ERROR: Failed to unbind."
+
+    sleep 1
+
+    $LOGGER "Step 2/3: Binding device..."
+    echo "''${WIFI_PCI_ID}" > "/sys/bus/pci/drivers/''${WIFI_DRIVER}/bind" || $LOGGER "ERROR: Failed to bind."
+
+    sleep 2
+
+    $LOGGER "Step 3/3: Restarting NetworkManager..."
+    $SYSTEMCTL restart NetworkManager || $LOGGER "ERROR: Failed to restart NetworkManager."
+
+    $LOGGER "--- Script finished. ---"
+  '';
+
+in
+
 {
-  systemd.services.reset-broadcom-wl-pci = {
-    description = "Find and reset Broadcom WiFi PCI device after resume";
-    serviceConfig.Type = "oneshot";
+  systemd.services."wifi-resume-fix" = {
+    description = "Definitive fix for Broadcom WiFi on resume (Correct Module Syntax)";
 
-    # Add pciutils to the service's PATH to make `lspci` available at runtime.
-    path = [ pkgs.systemd pkgs.pciutils ];
+    wantedBy = [ "sleep.target" ];
+    after = [ "sleep.target" ];
 
-    # This service should run after the system wakes up from suspend.
-    after = [ "suspend.target" ];
-    wantedBy = [ "suspend.target" ];
-
-    # The script that performs the fix.
-    # Note: All shell variables like `${VAR}` must be escaped as `''${VAR}`
-    # to prevent the Nix interpreter from evaluating them during build time.
-    script = ''
-      # The kernel driver name for this hardware.
-      WIFI_DRIVER="brcmfmac"
-
-      # Dynamically find the PCI address of the Broadcom wireless card.
-      # `lspci` lists devices, `grep` filters for the Broadcom network controller,
-      # and `awk` extracts the first field (the PCI address).
-      # The ''$(...) syntax ensures this command substitution is performed by the shell, not Nix.
-      WIFI_PCI_ID=''$(lspci | grep "Network controller.*Broadcom" | awk '{print $1}')
-
-      # Robustness check: if the PCI ID is not found, log an error and exit gracefully.
-      if [ -z "''${WIFI_PCI_ID}" ]; then
-        echo "Broadcom WiFi device not found. Aborting."
-        exit 1
-      fi
-
-      # A short delay to ensure the system is stable after resuming.
-      sleep 2
-
-      # 1. Unbind: Forcefully detach the device from its driver.
-      #    This simulates physically unplugging the device from the PCI bus.
-      echo "Unbinding WiFi device ''${WIFI_PCI_ID} from driver ''${WIFI_DRIVER}"
-      echo "''${WIFI_PCI_ID}" > "/sys/bus/pci/drivers/''${WIFI_DRIVER}/unbind"
-
-      sleep 1
-
-      # 2. Bind: Re-attach the device to its driver.
-      #    This forces a complete re-initialization of the hardware and driver.
-      echo "Binding WiFi device ''${WIFI_PCI_ID} to driver ''${WIFI_DRIVER}"
-      echo "''${WIFI_PCI_ID}" > "/sys/bus/pci/drivers/''${WIFI_DRIVER}/bind"
-
-      sleep 2
-
-      # 3. Restart NetworkManager: Ensure it detects the re-initialized device
-      #    and properly manages network connections.
-      # The SYSTEMCTL variable is defined for clarity, pointing to the absolute path.
-      SYSTEMCTL="/run/current-system/sw/bin/systemctl"
-      ''${SYSTEMCTL} restart NetworkManager
-    '';
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${wifiResumeScript}/bin/wifi-resume-script";
+      ExecStartPre = "${pkgs.coreutils}/bin/sleep 7";
+    };
   };
 }
