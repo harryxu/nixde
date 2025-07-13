@@ -78,4 +78,18 @@ in
       allowedUDPPorts = [ 3389 ];
     };
 
+
+    # GC
+    nix.settings = {
+      auto-optimise-store = true;
+      gc-keep-outputs = true;
+      gc-keep-derivations = true;
+    };
+    nix.gc = {
+      automatic = true;
+      dates = "*/3";
+      options = "--delete-older-than 30d";
+    };
+
+
   }
