@@ -15,10 +15,10 @@ in
 
     # List packages installed in system profile. To search, run: $ nix search wget
     environment.systemPackages = with pkgs; [
-      vim wget curl neovim fish starship zoxide
+      vim wget curl neovim fish starship zoxide tmux kitty
       gcc gnumake cmake pkg-config autoconf automake libtool
-      pciutils btop
-      tmux kitty
+      btop fzf bat fd eza procs broot
+      pciutils keyd
     ];
 
     programs.hyprland.enable = true;
@@ -70,6 +70,9 @@ in
 
     # Enable the OpenSSH daemon.
     services.openssh.enable = true;
+
+    # Disable auto start for keyd.
+    services.keyd.enable = false;
 
     # Firewall
     networking.firewall = {

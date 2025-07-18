@@ -11,7 +11,7 @@
     # hyprland packages
     hyprland hypridle hyprlock xdg-desktop-portal-hyprland
     waybar wofi pavucontrol grim slurp swaybg waypaper
-    swaynotificationcenter
+    swaynotificationcenter nwg-displays
   ];
 
   # Cursor theme
